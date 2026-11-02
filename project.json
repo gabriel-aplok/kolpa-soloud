@@ -83,6 +83,28 @@
 				"-Wall"
 			],
 			"output": "soloud_smoke.exe"
+		},
+		{
+			"name": "miniaudio-device-smoke",
+			"type": "exe",
+			"language": "c++",
+			"sources": [
+				"tests/miniaudio_device_smoke.cpp"
+			],
+			"libraries": [
+				"soloud"
+			],
+			"libraryPaths": [
+				"build/${config}/bin"
+			],
+			"linkOptions": [
+				"-lm"
+			],
+			"compileOptions": [
+				"-std=c++17",
+				"-Wall"
+			],
+			"output": "soloud_miniaudio_device_smoke.exe"
 		}
 	]
 }

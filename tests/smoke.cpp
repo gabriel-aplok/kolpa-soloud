@@ -2,6 +2,7 @@
 #include <cstdio>
 
 #include "audiosource/sfxr/soloud_sfxr.hpp"
+#include "backend/miniaudio/soloud_miniaudio.hpp"
 #include "soloud.hpp"
 
 namespace
@@ -19,6 +20,13 @@ namespace
 
 int main()
 {
+	if (SoLoud::setPreferredMiniaudioDevice(nullptr) != SoLoud::SO_NO_ERROR ||
+		SoLoud::getMiniaudioRecoveryStatus() != SoLoud::MiniaudioRecoveryStatus::Idle)
+	{
+		std::printf("miniaudio device API setup failed\n");
+		return 1;
+	}
+
 	SoLoud::Soloud soloud;
 	if (soloud.init(SoLoud::Soloud::CLIP_ROUNDOFF, SoLoud::Soloud::NULLDRIVER, kSampleRate, kBufferSize, kChannels) != SoLoud::SO_NO_ERROR)
 	{

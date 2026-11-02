@@ -57,6 +57,35 @@ soloud.deinit();
 On Windows miniaudio loads system audio APIs at runtime, so no extra libraries
 are needed. On Linux link `-lm -ldl -lpthread`.
 
+Include `backend/miniaudio/soloud_miniaudio.hpp` to list playback devices and
+select one before calling `init`:
+
+```cpp
+std::vector<SoLoud::MiniaudioDevice> devices;
+if (SoLoud::getMiniaudioPlaybackDevices(devices) == SoLoud::SO_NO_ERROR && !devices.empty()) {
+    if (SoLoud::setPreferredMiniaudioDevice(&devices.front()) == SoLoud::SO_NO_ERROR) {
+        soloud.init(SoLoud::Soloud::CLIP_ROUNDOFF, SoLoud::Soloud::MINIAUDIO, 44100, 2048, 2);
+    }
+}
+```
+
+Check `init` result too. On device loss, miniaudio retries the
+selected device, then the default. `getMiniaudioRecoveryStatus` reports the
+outcome, and `setMiniaudioRecoveryCallback` reports status changes from the
+recovery thread. Pass `nullptr` to `setPreferredMiniaudioDevice` to use the
+default device.
+
+To check device enumeration and startup on a machine with an audio output:
+
+```powershell
+..\kolpa-engine\build\Kine.Build.exe --target miniaudio-device-smoke build
+build\debug\bin\soloud_miniaudio_device_smoke.exe
+```
+
+This does not simulate device loss. To test recovery, run an app that keeps
+miniaudio active, disconnect the selected device, then check the recovery
+callback or status.
+
 The library builds the one `MINIAUDIO_IMPLEMENTATION`, version 0.11.25. Do not
 build another one, and keep the consumer's miniaudio header on the same
 version.
