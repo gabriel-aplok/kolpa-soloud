@@ -1,21 +1,22 @@
 # kolpa-soloud
 
-SoLoud fork used by [Kolpa Engine](https://github.com/gabriel-aplok/kolpa-engine).
-Trimmed to the C++ core and built with the kine build system.
+SoLoud fork for [Kolpa Engine](https://github.com/gabriel-aplok/kolpa-engine).
+C++ core only, built with kine.
 
 ## What changed from upstream
 
-- Only C++ library code remains. The C API, glue bindings, demos, docs, tools, and
-  packaged scripts are removed.
-- Audio backends: miniaudio (default) and null (headless tests). SDL, OpenAL,
+- The C API, bindings, demos, docs, tools, and packaged scripts are gone. Only
+  the C++ library remains.
+- Two backends: miniaudio for a real device, null for tests. SDL, OpenAL,
   PortAudio, WASAPI, WinMM, XAudio2, ALSA, JACK, OSS, CoreAudio, OpenSL ES, and
-  Vita backends are removed.
-- OpenMPT is removed. It needs libmodplug and a C DLL loader.
-- Headers moved beside their sources under `src/` and renamed to `.hpp`.
+  the Vita backend are gone.
+- OpenMPT is gone. It needs libmodplug and a C DLL loader.
+- Headers moved next to their sources under `src/` and use the `.hpp`
+  extension.
 
-Everything else is upstream SoLoud: core engine, buses, queues, 3D audio, 12
-filters, and the WAV, WAV stream, noise, sfxr, speech, monotone, VIC, TED-SID,
-AY, and Viznut audio sources.
+The rest is upstream SoLoud: core engine, buses, queues, 3D audio, 12 filters,
+and the wav, wavstream, noise, sfxr, speech, monotone, vic, tedsid, ay, and
+vizsn sources.
 
 ## Build
 
@@ -26,7 +27,7 @@ Kine reads `project.json` from the repository root:
 ..\kolpa-engine\build\Kine.Build.exe --target smoke test
 ```
 
-The static library lands in `build/<config>/bin/libsoloud.a`.
+Output: `build/<config>/bin/libsoloud.a`.
 
 ## Use
 
@@ -46,14 +47,14 @@ soloud.play(wav);
 soloud.deinit();
 ```
 
-On Windows miniaudio loads system audio APIs at runtime, so no extra link
-libraries are needed. On Linux link `-lm -ldl -lpthread`.
+On Windows miniaudio loads system audio APIs at runtime, so no extra libraries
+are needed. On Linux link `-lm -ldl -lpthread`.
 
-The library compiles the single `MINIAUDIO_IMPLEMENTATION` (0.11.25). Consumers
-must not compile another one, and their miniaudio header must be the same
+The library builds the one `MINIAUDIO_IMPLEMENTATION`, version 0.11.25. Do not
+build another one, and keep the consumer's miniaudio header on the same
 version.
 
-The null backend needs no device and is meant for tests:
+The null backend opens no device. It is for tests:
 
 ```cpp
 soloud.init(SoLoud::Soloud::CLIP_ROUNDOFF, SoLoud::Soloud::NULLDRIVER, 44100, 2048, 2);
@@ -62,6 +63,6 @@ soloud.init(SoLoud::Soloud::CLIP_ROUNDOFF, SoLoud::Soloud::NULLDRIVER, 44100, 20
 ## License
 
 zlib/libpng, same as upstream SoLoud. Original copyright and license notices
-stay in every file. Upstream project: https://soloud-audio.com
+stay in every file. Upstream: https://soloud-audio.com
 
-This fork is an altered version of SoLoud, as required by the license terms.
+This fork is an altered version of SoLoud, as the license requires.
