@@ -45,8 +45,7 @@
 			"type": "test",
 			"language": "c++",
 			"sources": [
-				"tests/smoke.cpp",
-				"tests/miniaudio_impl.cpp"
+				"tests/smoke.cpp"
 			],
 			"libraries": [
 				"soloud"

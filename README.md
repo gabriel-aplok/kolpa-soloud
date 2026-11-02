@@ -49,10 +49,9 @@ soloud.deinit();
 On Windows miniaudio loads system audio APIs at runtime, so no extra link
 libraries are needed. On Linux link `-lm -ldl -lpthread`.
 
-The library does not compile `MINIAUDIO_IMPLEMENTATION`. The consumer owns it,
-so a game binary never links two implementations. `tests/miniaudio_impl.cpp`
-provides it for the fork smoke test only. The header version must match the
-consumer's miniaudio header.
+The library compiles the single `MINIAUDIO_IMPLEMENTATION` (0.11.25). Consumers
+must not compile another one, and their miniaudio header must be the same
+version.
 
 The null backend needs no device and is meant for tests:
 
