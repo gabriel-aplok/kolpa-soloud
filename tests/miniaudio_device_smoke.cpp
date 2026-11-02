@@ -2,6 +2,7 @@
 #include <chrono>
 #include <condition_variable>
 #include <cstdio>
+#include <cstring>
 #include <mutex>
 #include <vector>
 
@@ -10,6 +11,7 @@
 namespace SoLoud
 {
 	extern ma_device gDevice;
+	extern ma_device_id gPreferredDevice;
 }
 
 namespace
@@ -19,7 +21,7 @@ namespace
 	constexpr unsigned int kChannels = 2;
 	constexpr unsigned int kPeriodSizeInFrames = 512;
 	constexpr unsigned int kPeriods = 3;
-	constexpr unsigned int kExpectedStatusEvents = 16;
+	constexpr unsigned int kExpectedStatusEvents = 18;
 	std::atomic<unsigned int> gStatusEvents = 0;
 	std::atomic<int> gLastCallbackStatus = static_cast<int>(SoLoud::MiniaudioRecoveryStatus::Idle);
 	std::atomic<bool> gCallbackStatusMatches = true;
@@ -143,6 +145,29 @@ int main()
 			std::printf("miniaudio repeated loss recovery failed\n");
 			return 1;
 		}
+	}
+	ma_device_id unavailableDevice;
+	std::memset(&unavailableDevice, 0, sizeof(unavailableDevice));
+	unavailableDevice.wasapi[0] = static_cast<ma_wchar_win32>('!');
+	for (const SoLoud::MiniaudioDevice &device : devices)
+	{
+		if (ma_device_id_equal(&unavailableDevice, &device.id) != MA_FALSE)
+		{
+			soloud.deinit();
+			std::printf("could not create an unavailable device ID for fallback test\n");
+			return 1;
+		}
+	}
+	SoLoud::gPreferredDevice = unavailableDevice;
+	const SoLoud::result unavailableRecoveryResult = SoLoud::recoverMiniaudioPlaybackDevice();
+	const SoLoud::MiniaudioRecoveryStatus unavailableRecoveryStatus = SoLoud::getMiniaudioRecoveryStatus();
+	if (unavailableRecoveryResult != SoLoud::SO_NO_ERROR ||
+		unavailableRecoveryStatus != SoLoud::MiniaudioRecoveryStatus::DefaultDeviceRestored)
+	{
+		soloud.deinit();
+		std::printf("selected-device fallback failed: result=%d status=%d active=%s\n",
+			unavailableRecoveryResult, static_cast<int>(unavailableRecoveryStatus), SoLoud::gDevice.playback.name);
+		return 1;
 	}
 	if (SoLoud::switchMiniaudioPlaybackDevice(nullptr) != SoLoud::SO_NO_ERROR ||
 		SoLoud::recoverMiniaudioPlaybackDevice() != SoLoud::SO_NO_ERROR ||

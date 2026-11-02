@@ -70,6 +70,8 @@ namespace SoLoud
 namespace SoLoud
 {
     ma_device gDevice;
+    ma_context gContext;
+    bool gContextInitialized = false;
     bool gDeviceInitialized = false;
     bool gRecoveryEnabled = false;
     bool gBackendInitializing = false;
@@ -112,6 +114,16 @@ namespace SoLoud
     {
         ~WorkerExitGuard()
         {
+            if (gDeviceInitialized)
+            {
+                ma_device_uninit(&gDevice);
+                gDeviceInitialized = false;
+            }
+            if (gContextInitialized)
+            {
+                ma_context_uninit(&gContext);
+                gContextInitialized = false;
+            }
             {
                 std::lock_guard<std::mutex> lock(gRecoveryMutex);
                 gWorkerExited = true;
@@ -236,7 +248,7 @@ namespace SoLoud
             }
         };
         config.pUserData = gSoloud;
-        const ma_result initializationResult = ma_device_init(NULL, &config, &gDevice);
+        const ma_result initializationResult = ma_device_init(&gContext, &config, &gDevice);
         if (initializationResult != MA_SUCCESS)
             return MA_ERROR;
         gDeviceInitialized = true;
@@ -300,6 +312,15 @@ namespace SoLoud
             gWorkerThreadId = std::this_thread::get_id();
         }
         WorkerExitGuard exitGuard;
+        if (ma_context_init(NULL, 0, NULL, &gContext) != MA_SUCCESS)
+        {
+            std::lock_guard<std::mutex> lock(gRecoveryMutex);
+            gStartupCompleted = true;
+            gStartupSucceeded = false;
+            gRecoveryCondition.notify_all();
+            return;
+        }
+        gContextInitialized = true;
         const bool openedPreferred = gStartupHasPreferredDevice &&
             initializeDevice(&gStartupPreferredDevice) == MA_SUCCESS;
         if (!openedPreferred && initializeDevice(NULL) != MA_SUCCESS)

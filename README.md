@@ -87,10 +87,11 @@ To check device enumeration and startup on a machine with an audio output:
 build\debug\bin\soloud_miniaudio_device_smoke.exe
 ```
 
-This test repeats runtime switching and recovery, checks callbacks and latency,
-then shuts the worker down. `miniaudio-recovery-policy` tests selected-device
-failure and fallback order without hardware. Physical device-loss notification
-still needs unplug testing.
+This test repeats runtime switching and recovery, injects an unavailable
+selected-device ID and verifies recovery opens the default device, checks
+callbacks and latency, then shuts the worker down. `miniaudio-recovery-policy`
+tests fallback order without hardware. Physical device-loss notification still
+needs unplug testing.
 
 The library builds the one `MINIAUDIO_IMPLEMENTATION`, version 0.11.25. Do not
 build another one, and keep the consumer's miniaudio header on the same
