@@ -32,9 +32,10 @@ build\release\bin\soloud_mix_benchmark.exe
 
 Output: `build/<config>/bin/libsoloud.a`. The benchmark reports median mix time
 per frame and its share of the 44.1 kHz real-time budget for mono and stereo
-PCM, in-memory mono WAV streams, and per-voice or global biquad filters. Each
-case varies voice count and block size. Use a release build for timing
-comparisons.
+PCM, WAV streams, and per-voice or global biquad filters. Each case varies voice
+count and block size. `--csv path` writes results for comparison. Pass
+`--baseline path --max-regression-percent value` to fail when a case exceeds its
+baseline by the chosen limit. Use a release build for timing comparisons.
 
 ## Use
 
@@ -62,18 +63,22 @@ select one before calling `init`:
 
 ```cpp
 std::vector<SoLoud::MiniaudioDevice> devices;
-if (SoLoud::getMiniaudioPlaybackDevices(devices) == SoLoud::SO_NO_ERROR && !devices.empty()) {
-    if (SoLoud::setPreferredMiniaudioDevice(&devices.front()) == SoLoud::SO_NO_ERROR) {
-        soloud.init(SoLoud::Soloud::CLIP_ROUNDOFF, SoLoud::Soloud::MINIAUDIO, 44100, 2048, 2);
-    }
-}
+if (SoLoud::getMiniaudioPlaybackDevices(devices) != SoLoud::SO_NO_ERROR || devices.empty()) return;
+if (SoLoud::setPreferredMiniaudioDevice(&devices.front()) != SoLoud::SO_NO_ERROR) return;
+if (SoLoud::setMiniaudioLatencyConfig(512, 3) != SoLoud::SO_NO_ERROR) return;
+if (soloud.init(SoLoud::Soloud::CLIP_ROUNDOFF, SoLoud::Soloud::MINIAUDIO, 44100, 2048, 2) != SoLoud::SO_NO_ERROR) return;
 ```
 
-Check `init` result too. On device loss, miniaudio retries the
-selected device, then the default. `getMiniaudioRecoveryStatus` reports the
-outcome, and `setMiniaudioRecoveryCallback` reports status changes from the
-recovery thread. Pass `nullptr` to `setPreferredMiniaudioDevice` to use the
-default device.
+Check each result. Device formats expose miniaudio's reported native formats.
+`capabilitiesAvailable` is false when the active audio backend reports none.
+Use `switchMiniaudioPlaybackDevice` to switch the running output without
+reinitializing `Soloud`. `getMiniaudioLatencyInfo` returns the actual period,
+period count, sample rate, and estimated buffered latency. Configure period
+frames and count before initialization. On device loss, recovery retries the
+selected device, then the default. `recoverMiniaudioPlaybackDevice` requests the
+same recovery sequence. `getMiniaudioRecoveryStatus` reports outcomes, and
+`setMiniaudioRecoveryCallback` reports status changes on the recovery thread.
+Pass `nullptr` to `setPreferredMiniaudioDevice` to use the default device.
 
 To check device enumeration and startup on a machine with an audio output:
 
@@ -82,9 +87,10 @@ To check device enumeration and startup on a machine with an audio output:
 build\debug\bin\soloud_miniaudio_device_smoke.exe
 ```
 
-This does not simulate device loss. To test recovery, run an app that keeps
-miniaudio active, disconnect the selected device, then check the recovery
-callback or status.
+This test repeats runtime switching and recovery, checks callbacks and latency,
+then shuts the worker down. `miniaudio-recovery-policy` tests selected-device
+failure and fallback order without hardware. Physical device-loss notification
+still needs unplug testing.
 
 The library builds the one `MINIAUDIO_IMPLEMENTATION`, version 0.11.25. Do not
 build another one, and keep the consumer's miniaudio header on the same

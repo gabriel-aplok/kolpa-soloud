@@ -105,6 +105,22 @@
 				"-Wall"
 			],
 			"output": "soloud_miniaudio_device_smoke.exe"
+		},
+		{
+			"name": "miniaudio-recovery-policy",
+			"type": "test",
+			"language": "c++",
+			"sources": [
+				"tests/miniaudio_recovery_policy.cpp"
+			],
+			"libraries": [],
+			"libraryPaths": [],
+			"linkOptions": [],
+			"compileOptions": [
+				"-std=c++17",
+				"-Wall"
+			],
+			"output": "soloud_miniaudio_recovery_policy.exe"
 		}
 	]
 }
