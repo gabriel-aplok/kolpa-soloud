@@ -36,9 +36,9 @@ freely, subject to the following restrictions:
 */
 
 #include <string.h>
-#include "soloud.h"
-#include "soloud_fftfilter.h"
-#include "soloud_fft.h"
+#include "soloud.hpp"
+#include "filter/soloud_fftfilter.hpp"
+#include "core/soloud_fft.hpp"
 
 
 namespace SoLoud

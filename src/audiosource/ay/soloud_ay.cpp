@@ -30,9 +30,9 @@ freely, subject to the following restrictions:
 #include "sndrender.h"
 #include "sndchip.h"
 #include "chipplayer.h"
-#include "soloud_ay.h"
-#include "soloud_file.h"
-#include "zx7decompress.h"
+#include "audiosource/ay/soloud_ay.hpp"
+#include "core/soloud_file.hpp"
+#include "audiosource/zx7decompress.hpp"
 
 
 namespace SoLoud

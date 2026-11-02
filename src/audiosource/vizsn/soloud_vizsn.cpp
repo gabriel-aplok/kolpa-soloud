@@ -14,7 +14,7 @@ released under same license.
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "soloud_vizsn.h"
+#include "audiosource/vizsn/soloud_vizsn.hpp"
 
 /*
 

@@ -23,9 +23,9 @@ freely, subject to the following restrictions:
 */
 
 #include <string.h>
-#include "soloud.h"
-#include "soloud_misc.h"
-#include "soloud_robotizefilter.h"
+#include "soloud.hpp"
+#include "core/soloud_misc.hpp"
+#include "filter/soloud_robotizefilter.hpp"
 
 namespace SoLoud
 {

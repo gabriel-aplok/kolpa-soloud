@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <memory.h>
 #include "chipplayer.h"
-#include "soloud_file.h"
-#include "soloud_ay.h"
+#include "core/soloud_file.hpp"
+#include "audiosource/ay/soloud_ay.hpp"
 
 ChipPlayer::ChipPlayer(SoLoud::AyInstance *aInstance)
 	: buffer(8192), chip(buffer), chip2(buffer), mInstance(aInstance)

@@ -23,8 +23,8 @@ freely, subject to the following restrictions:
 */
 
 #include <string.h>
-#include "soloud.h"
-#include "soloud_bassboostfilter.h"
+#include "soloud.hpp"
+#include "filter/soloud_bassboostfilter.hpp"
 
 
 namespace SoLoud

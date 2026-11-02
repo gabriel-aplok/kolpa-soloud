@@ -28,9 +28,9 @@ freely, subject to the following restrictions:
 #include <math.h>
 #include "sid.h"
 #include "ted.h"
-#include "soloud_tedsid.h"
-#include "soloud_file.h"
-#include "zx7decompress.h"
+#include "audiosource/tedsid/soloud_tedsid.hpp"
+#include "core/soloud_file.hpp"
+#include "audiosource/zx7decompress.hpp"
 
 namespace SoLoud
 {

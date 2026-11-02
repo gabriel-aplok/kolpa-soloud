@@ -22,8 +22,8 @@ freely, subject to the following restrictions:
    distribution.
 */
 #include <string.h>
-#include "soloud.h"
-#include "soloud_flangerfilter.h"
+#include "soloud.hpp"
+#include "filter/soloud_flangerfilter.hpp"
 
 namespace SoLoud
 {

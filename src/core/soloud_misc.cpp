@@ -22,7 +22,7 @@ freely, subject to the following restrictions:
    distribution.
 */
 
-#include "soloud_misc.h"
+#include "core/soloud_misc.hpp"
 #include <math.h>
 
 namespace SoLoud

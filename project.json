@@ -1,0 +1,67 @@
+{
+	"schemaVersion": 1,
+	"name": "soloud",
+	"type": "cpp-native",
+	"configurations": {
+		"debug": {
+			"defines": [
+				"_DEBUG"
+			],
+			"compileOptions": []
+		},
+		"release": {
+			"defines": [
+				"NDEBUG"
+			],
+			"compileOptions": []
+		}
+	},
+	"paths": {
+		"build": "build",
+		"include": [
+			"src"
+		]
+	},
+	"targets": [
+		{
+			"name": "lib",
+			"type": "static",
+			"source": [
+				"src"
+			],
+			"defines": [
+				"WITH_MINIAUDIO",
+				"WITH_NULL"
+			],
+			"compileOptions": [
+				"-std=c++17",
+				"-Wall",
+				"-Wno-unused-parameter"
+			],
+			"output": "libsoloud.a"
+		},
+		{
+			"name": "smoke",
+			"type": "test",
+			"language": "c++",
+			"sources": [
+				"tests/smoke.cpp",
+				"tests/miniaudio_impl.cpp"
+			],
+			"libraries": [
+				"soloud"
+			],
+			"libraryPaths": [
+				"build/${config}/bin"
+			],
+			"linkOptions": [
+				"-lm"
+			],
+			"compileOptions": [
+				"-std=c++17",
+				"-Wall"
+			],
+			"output": "soloud_smoke.exe"
+		}
+	]
+}

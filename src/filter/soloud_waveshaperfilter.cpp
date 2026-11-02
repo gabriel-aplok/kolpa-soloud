@@ -24,8 +24,8 @@ freely, subject to the following restrictions:
 
 #include <math.h>
 #include <string.h>
-#include "soloud.h"
-#include "soloud_waveshaperfilter.h"
+#include "soloud.hpp"
+#include "filter/soloud_waveshaperfilter.hpp"
 
 namespace SoLoud
 {

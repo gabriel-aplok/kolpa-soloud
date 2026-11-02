@@ -24,8 +24,8 @@ freely, subject to the following restrictions:
 
 #include <math.h>
 #include <string.h>
-#include "soloud.h"
-#include "soloud_lofifilter.h"
+#include "soloud.hpp"
+#include "filter/soloud_lofifilter.hpp"
 
 namespace SoLoud
 {

@@ -25,9 +25,9 @@ freely, subject to the following restrictions:
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "soloud.h"
-#include "soloud_wav.h"
-#include "soloud_file.h"
+#include "soloud.hpp"
+#include "audiosource/wav/soloud_wav.hpp"
+#include "core/soloud_file.hpp"
 #include "stb_vorbis.h"
 #include "dr_mp3.h"
 #include "dr_wav.h"

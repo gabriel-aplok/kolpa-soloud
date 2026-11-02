@@ -23,7 +23,7 @@ distribution.
 */
 #include <stdlib.h>
 
-#include "soloud.h"
+#include "soloud.hpp"
 
 #if !defined(WITH_MINIAUDIO)
 
@@ -37,12 +37,7 @@ namespace SoLoud
 
 #else
 
-#define MINIAUDIO_IMPLEMENTATION
-#define MA_NO_NULL
-#define MA_NO_DECODING
-#define MA_NO_WAV
-#define MA_NO_FLAC
-#define MA_NO_MP3
+// consumer provides the miniaudio implementation
 #include "miniaudio.h"
 #include <math.h>
 

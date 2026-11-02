@@ -22,7 +22,7 @@ freely, subject to the following restrictions:
    distribution.
 */
 
-#include "soloud.h"
+#include "soloud.hpp"
 
 #if !defined(WITH_NULL)
 

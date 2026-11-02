@@ -82,7 +82,7 @@
 #include <stdio.h>
 #endif
 
-#include "soloud_file_hack_on.h"
+#include "core/soloud_file_hack_on.hpp"
 
 #ifdef __cplusplus
 extern "C" {
@@ -5584,4 +5584,4 @@ ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ------------------------------------------------------------------------------
 */
-#include "soloud_file_hack_off.h"
+#include "core/soloud_file_hack_off.hpp"

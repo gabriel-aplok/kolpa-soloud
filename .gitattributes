@@ -1,0 +1,31 @@
+* text=auto
+
+# C / C++
+*.c text eol=lf
+*.h text eol=lf
+*.cpp text eol=lf
+*.hpp text eol=lf
+
+# Configuration / data
+*.json text eol=lf
+*.txt text eol=lf
+*.def text eol=lf
+
+# Documentation
+*.md text eol=lf
+
+# Scripts
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+
+# Binary assets
+*.png binary
+*.wav binary
+*.ogg binary
+*.mp3 binary
+*.flac binary
+*.lib binary
+*.dll binary
+*.exe binary
+*.a binary
+*.o binary

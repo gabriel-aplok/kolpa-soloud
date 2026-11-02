@@ -24,8 +24,8 @@ freely, subject to the following restrictions:
 
 #include <math.h>
 #include <string.h>
-#include "soloud.h"
-#include "soloud_freeverbfilter.h"
+#include "soloud.hpp"
+#include "filter/soloud_freeverbfilter.hpp"
 
 
 namespace SoLoud

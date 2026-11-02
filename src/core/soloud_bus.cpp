@@ -22,9 +22,9 @@ freely, subject to the following restrictions:
    distribution.
 */
 
-#include "soloud.h"
-#include "soloud_fft.h"
-#include "soloud_internal.h"
+#include "soloud.hpp"
+#include "core/soloud_fft.hpp"
+#include "core/soloud_internal.hpp"
 
 namespace SoLoud
 {

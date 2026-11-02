@@ -29,7 +29,7 @@ freely, subject to the following restrictions:
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "soloud_vic.h"
+#include "audiosource/vic/soloud_vic.hpp"
 
 namespace SoLoud
 {
