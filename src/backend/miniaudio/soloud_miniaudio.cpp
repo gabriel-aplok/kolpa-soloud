@@ -81,9 +81,13 @@ namespace SoLoud
 
         aSoloud->postinit_internal(gDevice.sampleRate, gDevice.playback.internalPeriodSizeInFrames, aFlags, gDevice.playback.channels);
 
-        aSoloud->mBackendCleanupFunc = soloud_miniaudio_deinit;
+        if (ma_device_start(&gDevice) != MA_SUCCESS)
+        {
+            ma_device_uninit(&gDevice);
+            return UNKNOWN_ERROR;
+        }
 
-        ma_device_start(&gDevice);
+        aSoloud->mBackendCleanupFunc = soloud_miniaudio_deinit;
         aSoloud->mBackendString = "MiniAudio";
         return 0;
     }

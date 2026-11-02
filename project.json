@@ -41,6 +41,28 @@
 			"output": "libsoloud.a"
 		},
 		{
+			"name": "mix-benchmark",
+			"type": "exe",
+			"language": "c++",
+			"sources": [
+				"benchmarks/mix.cpp"
+			],
+			"libraries": [
+				"soloud"
+			],
+			"libraryPaths": [
+				"build/${config}/bin"
+			],
+			"linkOptions": [
+				"-lm"
+			],
+			"compileOptions": [
+				"-std=c++17",
+				"-Wall"
+			],
+			"output": "soloud_mix_benchmark.exe"
+		},
+		{
 			"name": "smoke",
 			"type": "test",
 			"language": "c++",

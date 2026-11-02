@@ -25,9 +25,16 @@ Kine reads `project.json` from the repository root:
 ```
 ..\kolpa-engine\build\Kine.Build.exe build
 ..\kolpa-engine\build\Kine.Build.exe --target smoke test
+..\kolpa-engine\build\Kine.Build.exe --target lib release
+..\kolpa-engine\build\Kine.Build.exe --target mix-benchmark release
+build\release\bin\soloud_mix_benchmark.exe
 ```
 
-Output: `build/<config>/bin/libsoloud.a`.
+Output: `build/<config>/bin/libsoloud.a`. The benchmark reports median mix time
+per frame and its share of the 44.1 kHz real-time budget for mono and stereo
+PCM, in-memory mono WAV streams, and per-voice or global biquad filters. Each
+case varies voice count and block size. Use a release build for timing
+comparisons.
 
 ## Use
 
